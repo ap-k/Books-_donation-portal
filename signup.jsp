@@ -4,7 +4,7 @@
     Author     : pc
 --%>
 
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page contentType="text/html" pageEncoding="UTF-8" import ="java.sql.*"  import = "DEV.save_user" import = "model.user_details"%>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -23,21 +23,34 @@ $('.panel-group').on('shown.bs.collapse', toggleIcon);
 <script type="text/javascript">
         function check()
         {
-           var res1=document.f1.pwd.value;
-           var res2=document.f1.pwd.value;
-           if(res1!=res2)
-               {
-                   alert("Password and confirm password do not match.try again");
+        <jsp:useBean id="p" class="model.user_details"/>
+        <jsp:setProperty name="p" property="*"/>
+          
+        var res1=document.f1.email.value;
+        var res2=document.f1.user_name.value;
+        var res3=document.f1.password.value;
+        var res4=document.f1.phone_no.value;
+        var res5=document.f1.sector.value;
+        var res6=document.f1.city.value;
+        var res7=document.f1.question.value;
+        var res8=document.f1.answer.value;
+          if(res1==null||res1==""||res2==null||res2==""||res3==null||res3==""||res4==null||res4==""||res5==null||res5==""||res6==null||res6==""||res7==null||res7==""||res8==null||res8=="")
+            {
+                   alert("Please fill all feilds");
                    return false;
-               }
-            else
-                {
-                       
-                        doc.f1.submit();
-                    }
+            }
+          else
+           {
+          
+                   
+                   doc.f1.submit();
+        }
+        
+      
+       }
                 
-           
-        }</script>
+
+                         </script>
 
 
 <script type="text/javascript">
@@ -112,7 +125,7 @@ $('.panel-group').on('shown.bs.collapse', toggleIcon);
 					rewindNav : false,
 					scrollPerPage : false,
 					pagination : false,
-					paginationNumbers : false,
+					paginationNumbers : false
 				});
 	</script>
 </head>		
@@ -147,17 +160,21 @@ $('.panel-group').on('shown.bs.collapse', toggleIcon);
 		      </button>
 		    </div>
 		    <!-- Collect the nav links, forms, and other content for toggling -->
+
+            
+		    <!-- Collect the nav links, forms, and other content for toggling -->
 		    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 		      <ul class="nav navbar-nav">
 		        <li><a href="index.jsp">Home</a></li>
 		        <li><a href="about.jsp">About</a></li>
-		        <li><a href="test1.jsp">Donate</a></li>
-		        <li class="active"><a href="signup.jsp">SignUp</a></li>
-                        <li class="active"><a href="login.jsp">Login</a></li>
-				<li><a href="search_book.jsp">Receive</a></li>
+		        <li class="active"><a href="test.jsp">Donate</a></li>
+		        <li><a href="signup.jsp">SignUp</a></li>
+                         <li><a href="login.jsp">Login</a></li>
+		         <li><a href="search_book.jsp">Receive</a></li>
 		        <li><a href="contact.jsp">Contact</a></li>
+                        
 		      </ul>
-		    </div><!-- /.navbar-collapse -->
+		    </div>
 		    <!-- start soc_icons -->
 		</nav>
 		
@@ -167,7 +184,7 @@ $('.panel-group').on('shown.bs.collapse', toggleIcon);
 	<div class="container">
 			<div class="row main">
 				<div class="main-login main-center">
-					<form class="" method="post" action="message.jsp" name="f1">
+					<form class="" method="post" action="message.jsp" name="f1" onsubmit="return check()"  >
 						<h3><center><u>SIGN UP</center></u></h3>
 
 						<div class="form-group">
@@ -176,11 +193,14 @@ $('.panel-group').on('shown.bs.collapse', toggleIcon);
 								<div class="input-group">
 									<span class="input-group-addon"><i class="fa fa-envelope fa" aria-hidden="true"></i></span>
 									<input type="text" class="form-control" name="email" id="email"  placeholder="Enter your Email"/>
+                                                                        <% String s= request.getParameter("email");
+                                                                        session.setAttribute("Email",s);%>
 								</div>
 							</div>
 						</div>
+                                                
 						<div class="form-group">
-							<label for="username" class="cols-sm-2 control-label">Username</label>
+							<label for="user_name" class="cols-sm-2 control-label">Username</label>
 							<div class="cols-sm-10">
 								<div class="input-group">
 									<span class="input-group-addon"><i class="fa fa-users fa" aria-hidden="true"></i></span>
@@ -189,23 +209,15 @@ $('.panel-group').on('shown.bs.collapse', toggleIcon);
 							</div>
 						</div>
 						<div class="form-group">
-							<label for="pwd" class="cols-sm-2 control-label">Password</label>
+							<label for="password" class="cols-sm-2 control-label">Password</label>
 							<div class="cols-sm-10">
 								<div class="input-group">
 									<span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
-									<input type="password" class="form-control" name="pwd" id="password"  placeholder="Enter your Password"/>
+									<input type="password" class="form-control" name="password" id="password"  placeholder="Enter your Password"/>
 								</div>
 							</div>
 						</div>
-						<div class="form-group">
-							<label for="password" class="cols-sm-2 control-label">Confirm Password</label>
-							<div class="cols-sm-10">
-								<div class="input-group">
-									<span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
-									<input type="password" class="form-control" name="password" id="confirm"  placeholder="Confirm your Password"/>
-								</div>
-							</div>
-						</div>
+						
 						<div class="form-group">
 							<label for="phone_no" class="cols-sm-2 control-label">Phone Number</label>
 							<div class="cols-sm-10">
@@ -270,6 +282,7 @@ $('.panel-group').on('shown.bs.collapse', toggleIcon);
                                                 
                                                 
                                                 
+                                                           
                                                 
                                                 
                                                 
@@ -278,13 +291,11 @@ $('.panel-group').on('shown.bs.collapse', toggleIcon);
                                                 
                                                 
                                                 
-                                                
-                                                
-                                                
+                                         
                                                 
                                                 
                                                 <div class="form-group ">
-							<input onclick="return check()" href=""  type="submit" id="button" value="submit" class="btn btn-primary btn-lg btn-block login-button"></a>
+							<input   type="submit" id="button" value="submit" href="" class="btn btn-primary btn-lg btn-block login-button"></a>
 						</div>
 						
 					</form>

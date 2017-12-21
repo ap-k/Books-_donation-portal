@@ -4,7 +4,7 @@
     Author     : pc
 --%>
 
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page contentType="text/html" pageEncoding="UTF-8" import="java.sql.*" import="java.util.*"%>
 <!DOCTYPE html>
 <html lang="en">
 <head> 
@@ -83,21 +83,32 @@ $('.panel-group').on('shown.bs.collapse', toggleIcon);
 
 			});
 		</script>
-        <script language="javascript">
-            function check()
+        <script type="text/javascript">
+        function check()
             {
-               var res1=document.f1.url.value;
-             
-               
-              
-               if(res1==null||res1=="")
+                  
+        var res1=document.f1.name.value;
+        var res2=document.f1.address.value;
+        
+        var res3=document.f1.email.value;
+        
+        var res4=document.f1.phone.value;
+       
+        var res5=document.f1.purpose.value;
+        var res6=document.f1.url.value;
+        
+          if(res1==null||res1==""||res2==null||res2==""||res3==null||res3==""||res4==null||res4==""||res5==null||res5==""||res6==null||res6=="")
             {
-                alert("Please give id image");
-                return false;
+                   alert("Please fill all feilds");
+                   return false;
             }
-            else{
-                
-                doc.f1.submit;
+          else
+           {
+          
+                   alert("We have mailed your details to the donor of this book and the details of the donor have also been mailed to you. You can use the details for futher enquiry and procedure to receive the book from the donor himself.");
+                   doc.f1.submit();
+        }
+        
             }
         </script>
 
@@ -155,10 +166,12 @@ $('.panel-group').on('shown.bs.collapse', toggleIcon);
 		      <ul class="nav navbar-nav">
 		        <li><a href="index.jsp">Home</a></li>
 		        <li><a href="about.jsp">About</a></li>
-		        <li><a href="book_details.jsp">Donate</a></li>
+		        <li><a href="test.jsp">Donate</a></li>
 		        <li><a href="signup.jsp">SignUp</a></li>
-				<li class="active"><a href="buy_books.jsp">Receive</a></li>
+                        <li><a href="login.jsp">Login</a></li>
+		        <li class="active"><a href="search_book.jsp">Receive</a></li>
 		        <li><a href="contact.jsp">Contact</a></li>
+                        
 		      </ul>
 		    </div><!-- /.navbar-collapse -->
 		    <!-- start soc_icons -->
@@ -181,80 +194,125 @@ $('.panel-group').on('shown.bs.collapse', toggleIcon);
                 <h4 class="panel-title">
                     <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
                         <i class="more-less glyphicon glyphicon-plus"></i>
-                        Concepts Of Physics.
-                    </a>
+                     
+                         <%
+       //String stp= request.getParameter("id");
+       // out.println(stp);
+        Connection cn;
+        PreparedStatement pst;
+        ResultSet rs,rs1,rs2;
+        Statement st;
+        ArrayList<String> al=new ArrayList<String>();
+        ArrayList<String> stan=new ArrayList<String>();
+        ArrayList<String> sub=new ArrayList<String>();
+       // String name;  
+       int i=0,count=0;
+    try{
+        
+     Class.forName("sun.jdbc.odbc.JdbcOdbcDriver");
+     cn=DriverManager.getConnection("jdbc:odbc:Aparna");
+     st=cn.createStatement();
+     rs=st.executeQuery("select * from new_book");
+     while(rs.next())
+     {
+         al.add(rs.getString(1));
+         stan.add(rs.getString(2));
+         sub.add(rs.getString(3));
+         // out.println("<br>");
+        // count++;
+         //if(count>2)
+         //    break;
+        
+     }
+    // rs1=st.executeQuery("select * from lender_book where book_name='"+stp+"'");
+    // rs1.next();
+       // String name=rs1.getString(2);
+      //  out.println("Donor :"+name);
+       //  out.println("<br>");
+       
+     
+  //   rs2=st.executeQuery("select user_name,phone_no,email,sector,city from user_details where user_name='"+name+"'");
+    // if(rs2.next())
+     //{
+     //out.println("Phone number: "+ rs2.getString(2));
+     //out.println("<br>"); 
+   //  out.println("Email id: "+rs2.getString(3));
+     // out.println("<br>");
+     //out.println("Sector: "+rs2.getString(4));
+      //out.println("<br>");
+    // out.println("City: "+rs2.getString(5));
+      //out.println("<br>");
+   // }
+ out.println(al.get(al.size()-1));%>
+    </a>
                 </h4>
             </div>
             <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
-                <div class="panel-body">
-               			<h5>Book Name : Concepts Of Physics By HC Verma.<br><br>
-               			Subject : Physics<br><br>
-               			Standard : 11<sup>th</sup><br><br></h5>
+                <div class="panel-body"><h5>
+                 <%out.println("Book name: "+ al.get(al.size()-1)+"<br>");
+                 out.println("Subject: "+ stan.get(stan.size()-1)+"<br>");
+                 out.println("Standard: "+ sub.get(sub.size()-1)+"<br>");%>     
+					  </h5>
                 <div class="form-group">
-							<a href="" target="_blank" type="button" id="button" class="btn btn-primary btn-lg btn-block login-button">Recieve</a>
+							<a href="search_book.jsp"  type="button" id="button" class="btn btn-primary btn-lg btn-block login-button">Receive</a>
 						</div>
-
-
                 </div>
-
-
 							
             </div>
         </div>
-
-
                  <div class="panel panel-default">
             <div class="panel-heading" role="tab" id="headingTwo">
                 <h4 class="panel-title">
                     <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
                         <i class="more-less glyphicon glyphicon-plus"></i>
-                        Concepts Of Physics 
+                       
+                        <%out.println(al.get(al.size()-2));%>
                     </a>
                 </h4>
             </div>
             <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
-                <div class="panel-body">
-               			<h5>Book Name : Concepts Of Physics By HC Verma.<br><br>
-               			Subject : Physics<br><br>
-               			Standard : 11<sup>th</sup><br><br></h5>
+                <div class="panel-body">"><h5>
+                      <%out.println("Book name: "+ al.get(al.size()-2)+"<br>");
+                 out.println("Subject: "+ stan.get(stan.size()-2)+"<br>");
+                 out.println("Standard: "+ sub.get(sub.size()-2)+"<br>");%></h5>
                     <div class="form-group">
-							<a href="" target="_blank" type="button" id="button" class="btn btn-primary btn-lg btn-block login-button">Recieve</a>
+							<a href="search_book.jsp" type="button" id="button" class="btn btn-primary btn-lg btn-block login-button">Receive</a>
 						</div>
                 </div>
             </div>
         </div>
-
-
          <div class="panel panel-default">
             <div class="panel-heading" role="tab" id="headingThree">
                 <h4 class="panel-title">
                     <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
                         <i class="more-less glyphicon glyphicon-plus"></i>
-                        Concepts Of Physics
+                 
+                        <%out.println(al.get(al.size()-3));%>
                     </a>
                 </h4>
             </div>
             <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
-                  <div class="panel-body">
-               			<h5>Book Name : Concepts Of Physics By HC Verma.<br><br>
-               			Subject : Physics<br><br>
-               			Standard : 11<sup>th</sup><br><br></h5>
+                <div class="panel-body"><h5>
+					  <%out.println("Book name: "+ al.get(al.size()-3)+"<br>");
+                 out.println("Subject: "+ stan.get(stan.size()-3)+"<br>");
+                 out.println("Standard: "+ sub.get(sub.size()-3)+"<br>");%></h5>
                     <div class="form-group">
-							<a href="" target="_blank" type="button" id="button" class="btn btn-primary btn-lg btn-block login-button">Recieve</a>
-						</div></div>
+							<a href="search_book.jsp"  type="button" id="button" class="btn btn-primary btn-lg btn-block login-button">Receive</a>
+						</div>
+                </div>
             </div>
         </div>
-
-
-
-
-
-
-
-
-
         </div>
         
+         <%}
+     
+   catch(Exception ex)
+                     {
+       out.println("EXCEPTION "+ex);
+    }
+        %>
+                       
+                
         
 
 
@@ -263,8 +321,8 @@ $('.panel-group').on('shown.bs.collapse', toggleIcon);
 			<div class="col-sm-4">
 
 			<div class="main-login main-center">
-			<center><h5><b>LETS DONATE</h5></center></h5></b><br>
-					<form class="" method="post" action="#">
+			<center><h5><b>Recieve a book</h5></center></h5></b><br>
+					<form class="" name="f1" method="post" action="index.jsp" onsubmit="return check()">
 					<div class="form-group">
 							<label for="name" class="cols-sm-2 control-label">Name</label>
 							<div class="cols-sm-10">
@@ -337,7 +395,7 @@ $('.panel-group').on('shown.bs.collapse', toggleIcon);
     					</div>
 
 						<div class="form-group">
-							<a href="" target="_blank" type="button" id="button" class="btn btn-primary btn-lg btn-block login-button">Donate</a>
+							<input type="submit" id="button" value="receive" class="btn btn-primary btn-lg btn-block login-button">
 						</div>	
 						
 						

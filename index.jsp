@@ -134,7 +134,7 @@
 		<div class="main row">
 			<div class="col-md-4 images_1_of_4 text-center">
 				<span class="bg"><i class="fa fa-book"></i></span>
-				<h4><a href="test1.jsp">Books</a></h4>
+				<h4><a href="test.jsp">Books</a></h4>
 				<p class="para">Studies have shown that giving wholeheartedly translates to personal happiness. In donating books you make other people happy as you make yourself happy. Who doesn’t want to be happy?</p>
 				<!-- <a href="single-page.html" class="fa-btn btn-1 btn-1e">read more</a> -->
 			</div>
